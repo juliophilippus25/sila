@@ -29,18 +29,18 @@ return new class extends Migration
             $table->string('kecamatan')->nullable();
             $table->string('kabupaten_kota')->nullable();
             $table->string('provinsi')->nullable();
-            $table->string('pendidikan_terakhir')->nullable();
-            $table->string('agama')->nullable();
-            $table->string('kepercayaan')->nullable();
+            $table->enum('pendidikan_terakhir', ['Belum Sekolah', 'Belum Tamat SD', 'SD/Sederajat','SLTP', 'SLTA', 'D1', 'D2', 'D3', 'S1', 'S2', 'S3'])->nullable();
+            $table->enum('agama', ['Islam', 'Kriten', 'Katolik', 'Hindu', 'Budha', 'Konghucu', 'Penghayat Kepercayaan','Lainnya'])->nullable();
             $table->string('organisasi_penghayat')->nullable();
             $table->string('pekerjaan')->nullable();
             $table->integer('anak_ke')->nullable();
-            $table->string('status_perkawinan')->nullable();
+            $table->enum('status_perkawinan', ['Belum Kawin', 'Kawin', 'Cerai Hidup', 'Cerai Mati'])->nullable();
             $table->integer('perkawinan_ke')->nullable();
-            $table->integer('istri_ke')->nullable();
-            $table->string('kewarganegaraan')->nullable();
+            $table->enum('kewarganegaraan', ['WNI', 'WNA'])->nullable();
             $table->string('kebangsaan')->nullable();
             $table->timestamps();
+
+            $table->foreign('form_id')->references('id')->on('form')->onDelete('cascade');
         });
     }
 

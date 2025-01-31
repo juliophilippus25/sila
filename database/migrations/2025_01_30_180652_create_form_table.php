@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('form', function (Blueprint $table) {
             $table->string('id')->primary();
+            $table->string('user_id');
+            $table->string('petugas_id')->nullable();
             $table->string('type')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('petugas_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

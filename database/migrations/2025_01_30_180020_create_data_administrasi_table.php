@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('nip_petugas_entri_data')->nullable();
             $table->date('tanggal_entri_data')->nullable();
             $table->timestamps();
+
+            $table->foreign('form_id')->references('id')->on('form')->onDelete('cascade');
         });
     }
 

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->date('tanggal_pemberkatan_perkawinan')->nullable();
             $table->date('tanggal_melapor')->nullable();
             $table->time('pukul')->nullable();
-            $table->string('agama')->nullable();
-            $table->string('kepercayaan')->nullable();
-            $table->string('nama_organisasi_penghayat_kepercayaan')->nullable();
+            $table->enum('pendidikan_terakhir', ['Belum Sekolah', 'Belum Tamat SD', 'SD/Sederajat','SLTP', 'SLTA', 'D1', 'D2', 'D3', 'S1', 'S2', 'S3'])->nullable();
+            $table->enum('agama', ['Islam', 'Kriten', 'Katolik', 'Hindu', 'Budha', 'Konghucu', 'Penghayat Kepercayaan','Lainnya'])->nullable();
+            $table->string('organisasi_penghayat')->nullable();
             $table->string('nama_badan_peradilan')->nullable();
             $table->string('nomor_putusan_pengadilan')->nullable();
             $table->date('tanggal_putusan_pengadilan')->nullable();
@@ -29,6 +29,8 @@ return new class extends Migration
             $table->json('nama_anak')->nullable();
             $table->json('no_tgl_akta_kelahiran')->nullable();
             $table->timestamps();
+
+            $table->foreign('form_id')->references('id')->on('form')->onDelete('cascade');
         });
     }
 
