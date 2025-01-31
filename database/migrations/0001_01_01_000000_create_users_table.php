@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('role', ['petugas', 'user'])->default('user');
-            $table->rememberToken();
+            $table->string('nip', 16)->unique()->nullable();
             $table->timestamps();
         });
 
