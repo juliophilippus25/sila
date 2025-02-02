@@ -7,8 +7,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return view('layouts.content');
+Route::get('/akta', function () {
+    return view('user.akta_perkawinan.create');
 });
 
 Auth::routes();
