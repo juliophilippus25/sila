@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('data_ibu_dari_istri', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->uuid('id')->primary();
             $table->string('form_id');
             $table->string('nik')->nullable();
             $table->string('nama_lengkap')->nullable();
