@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('data_ayah_dari_istri', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->uuid('id')->primary();
             $table->string('form_id');
             $table->string('nik')->nullable();
             $table->string('nama_lengkap')->nullable();
@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('agama', ['Islam', 'Kriten', 'Katolik', 'Hindu', 'Budha', 'Konghucu', 'Penghayat Kepercayaan','Lainnya'])->nullable();
             $table->string('organisasi_penghayat')->nullable();
             $table->date('tanggal_lahir')->nullable();
+            $table->string('tempat_lahir')->nullable();
             $table->string('alamat')->nullable();
             $table->string('rt')->nullable();
             $table->string('rw')->nullable();

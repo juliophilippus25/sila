@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('data_istri', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->uuid('id')->primary();
             $table->string('form_id');
             $table->string('nik', 16)->unique();
             $table->string('nomor_kk', 16)->nullable();
