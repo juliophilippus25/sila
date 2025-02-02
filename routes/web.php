@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\DataAdministrasiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
-
+use App\Models\DataAdministrasi;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,3 +35,7 @@ Route::put('/forms/{id}', [FormController::class, 'update'])->name('forms.update
 
 // Delete form
 Route::delete('/forms/{id}', [FormController::class, 'destroy'])->name('forms.destroy');
+
+Route::get('/forms/{id}/administrasi', [DataAdministrasiController::class, 'index'])->name('administrasi.index');
+Route::post('/forms/{id}/administrasi/store', [DataAdministrasiController::class, 'store'])->name('administrasi.store');
+

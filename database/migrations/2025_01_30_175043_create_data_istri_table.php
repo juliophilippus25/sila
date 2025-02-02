@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('data_istri', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('form_id');
-            $table->string('nik', 16)->unique();
+            $table->string('nik', 16);
             $table->string('nomor_kk', 16)->nullable();
             $table->string('nomor_paspor')->nullable();
             $table->string('nama_lengkap')->nullable();

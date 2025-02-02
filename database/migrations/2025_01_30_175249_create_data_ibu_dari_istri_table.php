@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('agama', ['Islam', 'Kriten', 'Katolik', 'Hindu', 'Budha', 'Konghucu', 'Penghayat Kepercayaan','Lainnya'])->nullable();
             $table->string('organisasi_penghayat')->nullable();
             $table->date('tanggal_lahir')->nullable();
+            $table->date('tempat_lahir')->nullable();
             $table->string('alamat')->nullable();
             $table->string('rt')->nullable();
             $table->string('rw')->nullable();
@@ -27,7 +28,7 @@ return new class extends Migration
             $table->string('telepon')->nullable();
             $table->string('desa_kelurahan')->nullable();
             $table->string('kecamatan')->nullable();
-            $table->string('kab_kota')->nullable();
+            $table->string('kabupaten_kota')->nullable();
             $table->string('provinsi')->nullable();
             $table->string('pekerjaan')->nullable();
             $table->timestamps();

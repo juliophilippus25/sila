@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('telepon')->nullable();
             $table->string('desa_kelurahan')->nullable();
             $table->string('kecamatan')->nullable();
-            $table->string('kab_kota')->nullable();
+            $table->string('kabupaten_kota')->nullable();
             $table->string('pronvisi')->nullable();
             $table->timestamps();
 

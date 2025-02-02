@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('form', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('user_id');
+            $table->string('user_id')->nullable();
             $table->string('petugas_id')->nullable();
             $table->string('type')->nullable();
             $table->string('status')->nullable();
