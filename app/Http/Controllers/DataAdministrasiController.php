@@ -21,17 +21,6 @@ class DataAdministrasiController extends Controller
             'form' => $form,
             'administrasi' => $administrasi
         ], 200);
-        // $form = Form::find($id);
-        // $form = Form::find($id);
-
-        // if (!$form) {
-        //     return redirect()->route('forms.index')->with('error', 'Form not found.');
-        // }
-
-        // return view('create_administrasi', [
-        //     'form_id' => $id,
-        //     'form' => $form,
-        // ]);
     }
 
     public function store(Request $request, $id)
@@ -96,6 +85,80 @@ class DataAdministrasiController extends Controller
             'message' => 'Data administrasi created successfully',
             'data_administrasi' => $dataAdministrasi
         ], 201);
+    }
+
+    public function edit($id)
+    {
+        $dataAdministrasi = DataAdministrasi::where('form_id', $id)->first();
+
+        if (!$dataAdministrasi) {
+            return redirect()->route('administrasi.store', ['id' => $id])
+                ->with('error', 'Data administrasi not found. Please create one.');
+        }
+
+        return view('create_administrasi', compact('dataAdministrasi', 'id'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $dataAdministrasi = DataAdministrasi::where('form_id', $id)->firstOrFail();
+
+        // Validate input
+        $validator = Validator::make($request->all(), [
+            'persyaratan' => 'required|array|min:1',
+            'persyaratan.*.desc' => 'required|string',
+            'persyaratan.*.checkbox' => 'required|boolean',
+            'persyaratan.*.path_file' => 'nullable|file|mimes:jpg,png,pdf|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => 'Validation failed',
+                'messages' => $validator->errors()
+            ], 422);
+        }
+
+        Log::info('Request Data:', $request->all());
+
+        // Process persyaratan and handle file uploads
+        $persyaratan = collect($request->persyaratan)->map(function ($item, $index) use ($request) {
+            if ($request->hasFile("persyaratan.{$index}.path_file")) {
+                $file = $request->file("persyaratan.{$index}.path_file");
+
+                if ($file->isValid()) {
+                    $uniqueFileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $path = $file->storeAs('persyaratan_files', $uniqueFileName, 'public');
+
+                    return [
+                        'desc' => $item['desc'],
+                        'checkbox' => $item['checkbox'],
+                        'path_file' => $path,
+                    ];
+                }
+            }
+
+            return [
+                'desc' => $item['desc'],
+                'checkbox' => $item['checkbox'],
+                'path_file' => $item['path_file'] ?? null,
+            ];
+        })->toArray();
+
+        // Update the record
+        $dataAdministrasi->update([
+            'persyaratan' => json_encode($persyaratan),
+            'nomor_akta_perkawinan' => $request->nomor_akta_perkawinan,
+            'tanggal_akta_perkawinan' => $request->tanggal_akta_perkawinan,
+            'tanggal_cetak_kutipan_akta' => $request->tanggal_cetak_kutipan_akta,
+            'nama_petugas_entri_data' => $request->nama_petugas_entri_data,
+            'nip_petugas_entri_data' => $request->nip_petugas_entri_data,
+            'tanggal_entri_data' => $request->tanggal_entri_data,
+        ]);
+
+        return response()->json([
+            'message' => 'Data administrasi updated successfully',
+            'data_administrasi' => $dataAdministrasi
+        ], 200);
     }
 
 
